@@ -5,16 +5,16 @@ namespace Tennis
         private readonly Player _playerOne;
         private readonly Player _playerTwo;
 
+        private readonly string[] _scores = { "Love", "Fifteen", "Thirty", "Forty" };
         public TennisGame3(string player1Name, string player2Name)
         {
-            _playerOne = new Player(player1Name);
+            _playerOne = new Player(player1Name);  // ideally we would have a repository that handles creating new instances of the Player class
             _playerTwo = new Player(player2Name);
         }
 
         public string GetScore()
         {
-            string s;
-            if ((_playerOne.Points < 4 && _playerTwo.Points < 4) && (_playerOne.Points + _playerTwo.Points < 6))
+            if (IsPlayerPointsLessThanFour() && IsSumPlayerPointsLessThanSix())
             {
                 return GetGameScore();
             }
@@ -33,9 +33,17 @@ namespace Tennis
         }
 
         private string GetPlayerScore(int playerPoints)
+        {            
+            return _scores[playerPoints];
+        }
+
+        private bool IsPlayerPointsLessThanFour()
         {
-            string[] scores = { "Love", "Fifteen", "Thirty", "Forty" };
-            return scores[playerPoints];
+            return _playerOne.Points < 4 && _playerTwo.Points < 4;
+        }
+        private bool IsSumPlayerPointsLessThanSix()
+        {
+            return _playerOne.Points + _playerTwo.Points < 6;
         }
 
         private string DecideGame()
