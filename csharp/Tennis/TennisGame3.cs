@@ -16,16 +16,11 @@ namespace Tennis
             string s;
             if ((_playerOne.Points < 4 && _playerTwo.Points < 4) && (_playerOne.Points + _playerTwo.Points < 6))
             {
-                string[] p = { "Love", "Fifteen", "Thirty", "Forty" };
-                s = p[_playerOne.Points];
-                return (_playerOne.Points == _playerTwo.Points) ? s + "-All" : s + "-" + p[_playerTwo.Points];
+                return GetGameScore();
             }
             else
             {
-                if (_playerOne.Points == _playerTwo.Points)
-                    return "Deuce";
-                s = _playerOne.Points > _playerTwo.Points ? _playerOne.Name : _playerTwo.Name;
-                return ((_playerOne.Points - _playerTwo.Points) * (_playerOne.Points - _playerTwo.Points) == 1) ? "Advantage " + s : "Win for " + s;
+                return DecideGame();
             }
         }
 
@@ -35,6 +30,28 @@ namespace Tennis
                 this._playerOne.Points += 1;
             else
                 this._playerTwo.Points += 1;
+        }
+
+        private string GetPlayerScore(int playerPoints)
+        {
+            string[] scores = { "Love", "Fifteen", "Thirty", "Forty" };
+            return scores[playerPoints];
+        }
+
+        private string DecideGame()
+        {
+            if (_playerOne.Points == _playerTwo.Points)
+                return "Deuce";
+            string leader = _playerOne.Points > _playerTwo.Points ? _playerOne.Name : _playerTwo.Name;
+            return ((_playerOne.Points - _playerTwo.Points) * (_playerOne.Points - _playerTwo.Points) == 1) ? "Advantage " + leader : "Win for " + leader;
+        }
+
+        private string GetGameScore()
+        {
+            var playerOneScore = GetPlayerScore(_playerOne.Points);
+            var playerTwoScore = GetPlayerScore(_playerTwo.Points);
+            var score = _playerOne.Points == _playerTwo.Points ? playerOneScore + "-All" : playerOneScore + "-" + playerTwoScore;
+            return score;
         }
 
     }
