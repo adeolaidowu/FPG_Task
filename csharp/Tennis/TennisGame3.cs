@@ -57,8 +57,7 @@ namespace Tennis
         private string GetGameScore()
         {
             var playerOneScore = GetPlayerScore(_playerOne.Points);
-            var playerTwoScore = GetPlayerScore(_playerTwo.Points);
-            var score = _playerOne.Points == _playerTwo.Points ? playerOneScore + "-All" : playerOneScore + "-" + playerTwoScore;
+            var score = _playerOne.Points == _playerTwo.Points ? playerOneScore + "-All" : playerOneScore + "-" + GetPlayerScore(_playerTwo.Points);
             return score;
         }
 
